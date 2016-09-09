@@ -39,7 +39,6 @@ class BasisInstallCommand extends InstallAndReplaceCommand
     {
         $name = $this->getParsedNameInput();
 
-        $this->call('vendor:publish');
         $this->call('make:auth');
         $this->call('rbac:migration');
 
