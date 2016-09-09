@@ -38,13 +38,13 @@ class BasisPackagesRegisterCommand extends InstallContentCommand
             ],
             'providers' => [
                 'path' => '/app/Providers/AppServiceProvider.php',
-                'search' => "if ($this->app->environment() == 'local') {",
+                'search' => 'if ($this->app->environment() == "local") {',
                 'stub' => __DIR__ . '/../stubs/Providers/AppServiceProviderProviders.stub',
                 'prefix' => false,
             ],
             'providersConfig' => [
                 'path' => '/config/app.php',
-                'search' => "* Package Service Providers...\n        */",
+                'search' => "* Package Service Providers...\n         */",
                 'stub' => __DIR__ . '/../stubs/config/appProviders.stub',
                 'prefix' => false,
             ],

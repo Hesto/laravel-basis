@@ -24,44 +24,57 @@ class BasisServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerInstallCommand();
-        $this->registerAuthSettingsInstallCommand();
-        $this->registerAuthFilesInstallCommand();
+        $this->registerBasisDependenciesCommand();
+        $this->registerBasisRegiserCommand();
+        $this->registerBasisEnvCommand();
     }
 
     /**
-     * Register the adminlte:install command.
+     * Register the basis:install command.
      */
     private function registerInstallCommand()
     {
         $this->app->singleton('command.hesto.laravel-basis.install', function ($app) {
-            return $app['Hesto\MultiAuth\Commands\BasisInstallCommand'];
+            return $app['Hesto\LaravelBasis\Commands\BasisInstallCommand'];
         });
 
         $this->commands('command.hesto.laravel-basis.install');
     }
 
     /**
-     * Register the adminlte:install command.
+     * Register the basis:install command.
      */
-    private function registerAuthSettingsInstallCommand()
+    private function registerBasisDependenciesCommand()
     {
         $this->app->singleton('command.hesto.laravel-basis.dependencies', function ($app) {
-            return $app['Hesto\MultiAuth\Commands\BasisDependenciesInstallCommand'];
+            return $app['Hesto\LaravelBasis\Commands\BasisDependenciesInstallCommand'];
         });
 
         $this->commands('command.hesto.laravel-basis.dependencies');
     }
 
     /**
-     * Register the adminlte:install command.
+     * Register the basis:install command.
      */
-    private function registerAuthFilesInstallCommand()
+    private function registerBasisRegiserCommand()
     {
         $this->app->singleton('command.hesto.laravel-basis.register', function ($app) {
-            return $app['Hesto\MultiAuth\Commands\BasisPackagesRegisterCommand'];
+            return $app['Hesto\LaravelBasis\Commands\BasisPackagesRegisterCommand'];
         });
 
         $this->commands('command.hesto.laravel-basis.register');
+    }
+
+    /**
+     * Register the basis:install command.
+     */
+    private function registerBasisEnvCommand()
+    {
+        $this->app->singleton('command.hesto.laravel-basis.env', function ($app) {
+            return $app['Hesto\LaravelBasis\Commands\BasisEnvInstallCommand'];
+        });
+
+        $this->commands('command.hesto.laravel-basis.env');
     }
 
 }

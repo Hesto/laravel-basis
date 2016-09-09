@@ -4,8 +4,7 @@ namespace Hesto\LaravelBasis\Commands;
 
 use Hesto\Core\Commands\InstallAndReplaceCommand;
 use Illuminate\Support\Facades\Artisan;
-use SplFileInfo;
-use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
 
 
 class BasisInstallCommand extends InstallAndReplaceCommand
@@ -22,7 +21,7 @@ class BasisInstallCommand extends InstallAndReplaceCommand
      *
      * @var string
      */
-    protected $description = 'Install new Laravel 5.3 project';
+    protected $description = 'Install packages';
 
     /**
      * Execute the console command.
@@ -31,72 +30,43 @@ class BasisInstallCommand extends InstallAndReplaceCommand
      */
     public function fire()
     {
-        $this->setEnvFile();
-        $this->composerRequire();
-        $this->composerUpdate();
-        $this->registerPackages();
         $this->installPackages();
-        $this->migrateTables();
 
         return true;
-    }
-
-    private function setEnvFile()
-    {
-
-    }
-
-    private function composerRequire()
-    {
-        Artisan::call('basis:dependencies', [
-            'name' => $this->getParsedNameInput(),
-            '--force' => true
-        ]);
-    }
-
-    private function composerUpdate()
-    {
-        exec('php composer update');
-    }
-
-    private function registerPackages()
-    {
-        Artisan::call('basis:register');
     }
 
     private function installPackages()
     {
         $name = $this->getParsedNameInput();
 
-        Artisan::call('vendor:publish');
-        Artisan::call('make:auth');
-        Artisan::call('rbac:migration');
+        $this->call('vendor:publish');
+        $this->call('make:auth');
+        $this->call('rbac:migration');
 
 
-        Artisan::call('multi-auth:install', [
-            'name' => $this->getParsedNameInput(),
+        $this->call('multi-auth:install', [
+            'name' => $name,
             '--force' => true
         ]);
 
-        Artisan::call('multi-auth:layout', [
-            'name' => $this->getParsedNameInput(),
+        $this->call('adminlte:install', [
             '--force' => true
         ]);
 
-        Artisan::call('make:view', [
-            'name' => $this->getParsedNameInput(),
+        $this->call('adminlte:layout', [
+            'name' => $name,
             '--force' => true
         ]);
 
-        Artisan::call('make:controller:template', [
-            'name' => $this->getParsedNameInput() . 'Controller',
+        $this->call('make:view', [
+            'name' => $name,
             '--force' => true
         ]);
-    }
 
-    private function migrateTables()
-    {
-        exec('php artisan migrate');
+        $this->call('make:controller:template', [
+            'name' => ucfirst($name) . 'Controller',
+            '--force' => true
+        ]);
     }
 
 
