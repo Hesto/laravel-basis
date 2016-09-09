@@ -1,0 +1,4 @@
+
+        "hesto/rbac": "^1.0",
+        "laravelcollective/html": "5.3.*"
+        "barryvdh/laravel-debugbar": "^2.2"

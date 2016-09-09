@@ -1,0 +1,4 @@
+
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'Rbac' => Hesto\Rbac\RbacFacade::class,
