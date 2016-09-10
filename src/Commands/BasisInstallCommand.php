@@ -39,13 +39,6 @@ class BasisInstallCommand extends InstallAndReplaceCommand
     {
         $name = $this->getParsedNameInput();
 
-        $this->call('make:auth');
-
-        $this->call('multi-auth:install', [
-            'name' => $name,
-            '--force' => true
-        ]);
-
         $this->call('adminlte:install', [
             '--force' => true
         ]);
@@ -62,13 +55,6 @@ class BasisInstallCommand extends InstallAndReplaceCommand
 
         $this->call('make:controller:template', [
             'name' => ucfirst($name) . 'Controller',
-            '--force' => true
-        ]);
-
-        $this->call('rbac:install');
-
-        $this->call('rbac:migration', [
-            'name' => str_plural(ucfirst($name)),
             '--force' => true
         ]);
     }
