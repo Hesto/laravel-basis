@@ -52,7 +52,9 @@ class BasisInstallCommand extends InstallAndReplaceCommand
         }
 
         if($this->getFrameworkInput() == 'bulma') {
-
+            $this->call('bulma:install', [
+                '--force' => true
+            ]);
         }
 
         $this->call('make:view', [
