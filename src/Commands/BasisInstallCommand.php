@@ -5,6 +5,7 @@ namespace Hesto\LaravelBasis\Commands;
 use Hesto\Core\Commands\InstallAndReplaceCommand;
 use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 
 class BasisInstallCommand extends InstallAndReplaceCommand
@@ -39,14 +40,20 @@ class BasisInstallCommand extends InstallAndReplaceCommand
     {
         $name = $this->getParsedNameInput();
 
-        $this->call('adminlte:install', [
-            '--force' => true
-        ]);
+        if($this->getFrameworkInput() == 'adminlte') {
+            $this->call('adminlte:install', [
+                '--force' => true
+            ]);
 
-        $this->call('adminlte:layout', [
-            'name' => $name,
-            '--force' => true
-        ]);
+            $this->call('adminlte:layout', [
+                'name' => $name,
+                '--force' => true
+            ]);
+        }
+
+        if($this->getFrameworkInput() == 'bulma') {
+
+        }
 
         $this->call('make:view', [
             'name' => $name,
@@ -59,5 +66,19 @@ class BasisInstallCommand extends InstallAndReplaceCommand
         ]);
     }
 
+    /**
+     * @return mixed
+     */
+    public function getFrameworkInput()
+    {
+        return $this->option('framework');
+    }
 
+    public function getOptions()
+    {
+        return [
+            ['framework', null, InputOption::VALUE_OPTIONAL, 'CSS framework', 'bulma'],
+            ['force', 'f', InputOption::VALUE_NONE, 'Force override existing files'],
+        ];
+    }
 }

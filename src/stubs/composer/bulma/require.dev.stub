@@ -1,0 +1,5 @@
+
+        "hesto/multi-auth": "^1.0",
+        "hesto/generators": "^1.0",
+        "laracasts/generators": "^1.1",
+        "barryvdh/laravel-ide-helper": "^2.1",
